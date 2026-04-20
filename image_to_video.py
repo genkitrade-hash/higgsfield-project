@@ -29,7 +29,7 @@ def main() -> int:
 
     payload = {
         "prompt": prompt,
-        "input_images": [{"type": "image_url", "image_url": image_url}],
+        "image_url": image_url,
         "motions": [],
         "enhance_prompt": True,
     }
