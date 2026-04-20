@@ -34,6 +34,9 @@ def main() -> int:
         "enhance_prompt": True,
     }
 
+    print("Request body:")
+    print(json.dumps(payload, indent=2))
+
     response = requests.post(API_URL, headers=headers, json=payload)
 
     print(f"HTTP {response.status_code}")
@@ -43,7 +46,13 @@ def main() -> int:
     print("Response body:")
     print(response.text)
 
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as exc:
+        print(f"\nRequest failed: {exc}", file=sys.stderr)
+        print("Server response body:", file=sys.stderr)
+        print(response.text, file=sys.stderr)
+        return 1
 
     try:
         data = response.json()
